@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Ilnaz
+      changes:
+        - createTable:
+            tableName: locality
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: population
+                  type: int
+
+              - column:
+                  name: has_metro
+                  type: boolean
+
+        - createTable:
+            tableName: landmark
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+
+
+              - column:
+                  name: create_date
+                  type: date
+
+              - column:
+                  name: description
+                  type: varchar(100)
+
+              - column:
+                  name: landmark_type
+                  type: int
+
+              - column:
+                  name: locality_id
+                  type: int
+                  constraints:
+                    references: locality(id)
+                    foreignKeyName: fk_landmark_locality
+
+        - createTable:
+            tableName: service
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: description
+                  type: varchar(100)
+
+        - createTable:
+            tableName: landmark_service
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: landmark_id
+                  type: int
+                  constraints:
+                    references: landmark(id)
+                    foreignKeyName: fk_landmark_service_attraction
+
+              - column:
+                  name: service_id
+                  type: int
+                  constraints:
+                    references: service(id)
+                    foreignKeyName: fk_landmark_service_service
